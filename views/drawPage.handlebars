@@ -1,0 +1,86 @@
+<h1>
+	Draw page
+</h1>
+
+
+
+<!-- <div class="col-md-4">
+	<input type="range" min="1" max="80" value="50" class="slider" id="XSize">
+</div> -->
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+ 
+
+    </script>
+</head>
+
+
+
+
+<div class="row">
+	<button onclick="search()">
+		Save the Pic
+	</button>
+
+	<a href="/">Go Home</a>
+</div>
+
+<script>
+
+function search(){
+	   var keyword = "houses";
+
+  
+
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+            tags: keyword,
+            tagmode: "any",
+            format: "json"
+        },
+        function(data) {
+            var rnd = Math.floor(Math.random() * data.items.length);
+
+            var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+
+            $('body').css('background-image', "url('" + image_src + "')");
+
+        });
+
+}
+
+// var sizeX = 10;
+
+// $('#XSize').on("mouseleave",function(){
+// 	sizeX = $("#XSize").slider("value");
+// 	console.log(sizeX);
+// });
+
+var c;
+var picURL;
+function saveMyPic(){
+	picURL = canvas.toDataURL().slice(22);
+
+
+	$.post("image",picURL, function(data, status){
+    	console.log(status);
+  	});
+
+	}
+
+
+function setup() {
+ c =  createCanvas(500, 500)
+ background(255, 255, 255);
+}
+
+function draw() {
+  if (mouseIsPressed) {
+    fill(0);
+    ellipse(mouseX, mouseY, 10, 10);
+  }
+  
+}
+</script>
